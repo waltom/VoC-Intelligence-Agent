@@ -1,0 +1,28 @@
+{
+  "name": "@voc/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev --port 8787",
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "deploy": "wrangler deploy",
+    "d1:migrate:local": "wrangler d1 migrations apply voc_db --local",
+    "d1:migrate:remote": "wrangler d1 migrations apply voc_db --remote",
+    "d1:create": "wrangler d1 create voc_db",
+    "vectorize:create": "wrangler vectorize create voc-reviews --dimensions=384 --metric=cosine",
+    "r2:create": "wrangler r2 bucket create voc-reports",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@voc/shared": "workspace:*",
+    "hono": "^4.6.10"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251101.0",
+    "typescript": "^5.6.3",
+    "wrangler": "^3.87.0"
+  }
+}

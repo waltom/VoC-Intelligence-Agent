@@ -1,0 +1,44 @@
+name = "voc-api"
+main = "src/index.ts"
+compatibility_date = "2026-05-07"
+compatibility_flags = ["nodejs_compat"]
+
+# Variables (override per env / via .dev.vars locally)
+[vars]
+FRONTEND_ORIGIN = "http://localhost:3000"
+
+# D1 database
+[[d1_databases]]
+binding = "voc_db"
+database_name = "voc_db"
+database_id = "1fdd432b-ba33-4d2a-b943-8d8493e39d9f"
+migrations_dir = "migrations"
+
+# Vectorize (embeddings store)
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "voc-reviews"
+
+# Workers AI
+[ai]
+binding = "AI"
+
+# R2 bucket (report exports)
+[[r2_buckets]]
+binding = "voc_reports"
+bucket_name = "voc-reports"
+
+# Durable Object - agent orchestrator
+[[durable_objects.bindings]]
+name = "ANALYSIS_DO"
+class_name = "AnalysisOrchestrator"
+
+# IMPORTANT: SQLite-backed DO storage is required for the Workers Free plan.
+# Do NOT use `new_classes` here - that triggers the legacy KV storage (paid).
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["AnalysisOrchestrator"]
+
+# Observability
+[observability]
+enabled = true
