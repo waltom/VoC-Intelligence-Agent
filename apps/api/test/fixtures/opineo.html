@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head><meta charset="utf-8"><title>Opinie - Example.pl</title></head>
+<body>
+  <main>
+    <ul class="reviews-list">
+      <li itemprop="review" itemscope itemtype="https://schema.org/Review">
+        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <span itemprop="name">Krzysztof</span>
+        </span>
+        <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+          <meta itemprop="ratingValue" content="4">
+          <meta itemprop="bestRating" content="5">
+        </div>
+        <p itemprop="reviewBody">Dobre ceny, szybka dostawa. Polecam ten sklep.</p>
+        <meta itemprop="datePublished" content="2024-08-15">
+      </li>
+
+      <li itemprop="review" itemscope itemtype="https://schema.org/Review">
+        <span itemprop="author">Magda K.</span>
+        <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+          <meta itemprop="ratingValue" content="5">
+        </div>
+        <p itemprop="reviewBody">Wszystko zgodnie z opisem, towar zapakowany solidnie.</p>
+        <meta itemprop="datePublished" content="2024-08-10">
+      </li>
+
+      <li itemprop="review" itemscope itemtype="https://schema.org/Review">
+        <span itemprop="author">Tomek</span>
+        <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+          <meta itemprop="ratingValue" content="2">
+        </div>
+        <p itemprop="reviewBody">Niestety produkt przyszedł uszkodzony i nikt nie odbiera telefonu.</p>
+        <meta itemprop="datePublished" content="2024-07-30">
+      </li>
+    </ul>
+  </main>
+</body>
+</html>

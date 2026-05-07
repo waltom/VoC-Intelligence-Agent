@@ -1,10 +1,14 @@
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 
+/**
+ * Runtime bindings — keep names in sync with wrangler.toml.
+ * Note: D1 / R2 binding names use snake_case to match the user's wrangler.toml.
+ */
 export interface Env {
-  DB: D1Database;
-  VEC: VectorizeIndex;
+  voc_db: D1Database;
+  VECTORIZE: VectorizeIndex;
   AI: Ai;
-  BUCKET: R2Bucket;
+  voc_reports: R2Bucket;
   ANALYSIS_DO: DurableObjectNamespace;
 
   GEMINI_API_KEY: string;
