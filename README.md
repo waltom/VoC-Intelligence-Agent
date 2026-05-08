@@ -1,33 +1,15 @@
 # VoC Intelligence Agent
 
+An agentic AI system that collects public customer opinions (Trustpilot, Opineo, App Store, and CSV/JSON imports) about a selected company and its competitors, classifies sentiment and topics, clusters themes in embedding space, and then synthesizes a business report with charts and a prioritized list of action items. The entire project fits **exclusively within free tiers** (Cloudflare Workers + D1 + Vectorize + Workers AI + R2 + Pages, Gemini 2.5 Flash Lite, Brave Search) — with no paid services.
 
-Agentowy system AI, który zbiera publiczne opinie klientów (Trustpilot, Opineo, App Store
-oraz import CSV/JSON) o wybranej firmie i jej konkurentach, klasyfikuje sentyment i
-tematykę, klasteruje tematy w przestrzeni embeddingów, a następnie syntetyzuje raport
-biznesowy z wykresami i listą priorytetowych action itemów. Cały projekt mieści się
-**wyłącznie w darmowych tierach** (Cloudflare Workers + D1 + Vectorize + Workers AI + R2 +
-Pages, Gemini 2.5 Flash Lite, Brave Search) — bez płatnych usług.
+- **Durable Object as a custom workflow engine**. Cloudflare Workflows are paid, so I built a replacement on DO using SQLite storage + an alarm-driven step loop. Each step is a separate invocation, so it does not hit the 30s CPU limit per request.
+- **Mixed-model inference**. Workers AI (`llama-3.1-8b-instruct` + `bge-m3`) is used for sentiment classification and embeddings, while Gemini 2.5 Flash Lite handles planning, reflection, and synthesis. A per-day neuron counter falls back to Gemini when fewer than 500 neurons remain.
+- **Agentic loop with reflection**: `plan → collect → classify → reflect → [collect ↻] → synthesize`. After the first round, Gemini decides whether more data needs to be fetched (maximum 2 cycles). The agent’s reasoning is shown to the user in the UI (“Agent thinks aloud”).
+- **Evidence-grounded action items**. Every quote in the report is validated with a substring match against the reviews database in D1. Hallucinations trigger a synthesis retry with a note: “fix quote X”.
+- **Vectorize semantic clustering** — `bge-m3` embeddings (1024-dimensional, multilingual) are generated per review and upserted with metadata (`analysisId`, `sentiment`, `category`, `rating`).
+- **Graceful degradation**. A quota guard returns 503 when Workers AI exceeds 80% of the daily limit. The frontend automatically switches to demo mode when the API is unavailable. If Trustpilot blocks scraping, a fail-fast guard returns a user-actionable message instead of generating an empty report.
 
-
-- **Durable Object jako custom workflow engine**. Cloudflare Workflows są płatne; zbudowałem
-  zamiennik na DO z SQLite storage + alarm-driven step loop. Każdy krok = osobna invocation,
-  więc nie wpada w 30s CPU limit per request.
-- **Mixed-model inference**. Workers AI (`llama-3.1-8b-instruct` + `bge-m3`) do klasyfikacji
-  sentymentu i embeddingów, Gemini 2.5 Flash Lite do planowania, refleksji i syntezy.
-  Per-day neuron counter z fallbackiem na Gemini gdy zostało <500 neuronów.
-- **Pętla agentic z refleksją**: `plan → collect → classify → reflect → [collect ↻] → synthesize`.
-  Po pierwszej rundzie Gemini decyduje, czy potrzeba dociągnąć dane (max 2 cykle).
-  Reasoning agenta jest pokazywany użytkownikowi w UI ("Agent thinks aloud").
-- **Evidence-grounded action items**. Każdy cytat z raportu jest walidowany substring
-  matchem przeciwko bazie recenzji w D1. Halucynacje → retry syntezy z notatką
-  "popraw cytat X".
-- **Vectorize semantic clustering** — embeddingi `bge-m3` (1024-dim, multilingual) per
-  recenzja, upsert z metadata (`analysisId`, `sentiment`, `category`, `rating`).
-- **Graceful degradation**. Quota guard zwraca 503 gdy Workers AI > 80% dziennego limitu.
-  Frontend automatycznie przechodzi w tryb demo gdy API niedostępne. Trustpilot blokuje
-  scraping → fail-fast guard z user-actionable message zamiast generowania pustego raportu.
-
-## Architektura
+## Architecture
 
 ```mermaid
 flowchart TD
@@ -50,5 +32,3 @@ flowchart TD
 
     API -->|GET /analyses/:id/events| SSE{{SSE stream}}
     API -->|GET /report.html| R2
-```
-
