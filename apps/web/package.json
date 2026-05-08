@@ -8,15 +8,19 @@
     "start": "next start --port 3000",
     "typecheck": "tsc --noEmit",
     "lint": "next lint",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "deploy": "npx @cloudflare/next-on-pages && wrangler pages deploy .vercel/output/static"
+    "pages:build": "pnpm exec next-on-pages",
+    "deploy": "pnpm exec next-on-pages && pnpm exec wrangler pages deploy .vercel/output/static"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.59.20",
     "@voc/shared": "workspace:*",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.460.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
-    "recharts": "^2.13.3"
+    "recharts": "^2.13.3",
+    "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.13.5",
