@@ -11,7 +11,6 @@ biznesowy z wykresami i listą priorytetowych action itemów. Cały projekt mie�
 **wyłącznie w darmowych tierach** (Cloudflare Workers + D1 + Vectorize + Workers AI + R2 +
 Pages, Gemini 2.5 Flash Lite, Brave Search) — bez płatnych usług.
 
-## Co tu jest ciekawego dla rekrutera
 
 - **Durable Object jako custom workflow engine**. Cloudflare Workflows są płatne; zbudowałem
   zamiennik na DO z SQLite storage + alarm-driven step loop. Każdy krok = osobna invocation,
@@ -155,21 +154,3 @@ Opcja 2 — z CLI:
 pnpm --filter @voc/web deploy
 ```
 
-## Co bym dodał dalej
-
-- **Auth + multi-tenant** — Clerk/Auth.js, każdy user widzi tylko swoje analizy.
-- **Scheduled re-analysis** — co 7 dni przez Cron Trigger; diff sentymentu w mailowym digest.
-- **Slack notifications** — webhook gdy `actionItem.impact >= 5` lub trend sentymentu spada.
-- **A/B promptów** — wariantowanie planning/synthesize z porównaniem evidence quality.
-- **Cloudflare Workflows** — gdy upgrade na Paid plan, swap DO orchestrator na Workflows
-  (krótsza ścieżka kodu, retry/timeout deklaratywnie).
-- **Browser Rendering** — żeby auto-mode działał na Trustpilocie pomimo bot-protection
-  (10 min/dzień free tier wystarcza na ~5 analiz dziennie).
-
-## Definition of done (P5)
-
-- ✅ CTA → formularz (oba taby) → live progress → dashboard → eksport.
-- ✅ Dashboard wygląda ok na 1440px i 375px.
-- ✅ Tryb demo działa offline (auto-fallback gdy API down + jawne `?demo=1`).
-- ✅ `pnpm build` przechodzi w obu apps.
-- ⏳ Lighthouse — do uruchomienia po deploy na Pages.
