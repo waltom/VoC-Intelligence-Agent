@@ -71,7 +71,7 @@ async function braveQuery(env: Env, query: string, count = 5): Promise<SearchHit
 export async function searchReviewSources(
   env: Env,
   businessName: string,
-  locale: "pl" | "en" = "pl",
+  extraQueries: string[] = [],
 ): Promise<SearchHit[]> {
   const queries = [
     `${businessName} opinie site:trustpilot.com`,
@@ -79,8 +79,8 @@ export async function searchReviewSources(
     // EN fallback always included — Trustpilot reviews are often indexed
     // under the .com domain regardless of the user's locale.
     `${businessName} reviews site:trustpilot.com`,
+    ...extraQueries,
   ];
-  void locale;
 
   const all: SearchHit[] = [];
   for (let i = 0; i < queries.length; i++) {

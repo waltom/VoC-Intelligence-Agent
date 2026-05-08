@@ -27,16 +27,17 @@ export async function persistReviews(
   env: Env,
   analysisId: string,
   reviews: CollectedReview[],
-): Promise<void> {
-  if (reviews.length === 0) return;
+): Promise<string[]> {
+  if (reviews.length === 0) return [];
+  const ids = reviews.map(() => crypto.randomUUID());
   const stmt = env.voc_db.prepare(
     "INSERT INTO reviews " +
       "(id, analysis_id, source, source_url, author, rating, content, posted_at, language) " +
       "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)",
   );
-  const batch = reviews.map((r) =>
+  const batch = reviews.map((r, i) =>
     stmt.bind(
-      crypto.randomUUID(),
+      ids[i]!,
       analysisId,
       r.source,
       r.sourceUrl ?? null,
@@ -48,6 +49,7 @@ export async function persistReviews(
     ),
   );
   await env.voc_db.batch(batch);
+  return ids;
 }
 
 export async function markAnalysisCompleted(env: Env, id: string): Promise<void> {
