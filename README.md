@@ -1,8 +1,5 @@
 # VoC Intelligence Agent
 
-> **Live demo**: _wstaw URL z Cloudflare Pages tutaj_ · **API**: _wstaw URL Workers tutaj_
->
-> ![dashboard preview](docs/dashboard.png)
 
 Agentowy system AI, który zbiera publiczne opinie klientów (Trustpilot, Opineo, App Store
 oraz import CSV/JSON) o wybranej firmie i jej konkurentach, klasyfikuje sentyment i
@@ -54,15 +51,4 @@ flowchart TD
     API -->|GET /analyses/:id/events| SSE{{SSE stream}}
     API -->|GET /report.html| R2
 ```
-
-## Free tier limits & graceful degradation
-
-| Usługa            | Limit                              | Co robimy gdy się skończy                              |
-| ----------------- | ---------------------------------- | ------------------------------------------------------ |
-| Workers AI        | 10 000 neuronów / dzień            | Po 80% — 503 + sugestia `manual_paste`. Po 95% — fallback Gemini |
-| Gemini Flash Lite | 1 500 RPD                          | 429 → 60s sleep + retry; 2× → status `rate_limited`    |
-| Brave Search      | 2 000 zapytań / mc                 | Search opcjonalny, scrape działa też z URL guess       |
-| D1                | 5M reads / dzień                   | Cache scrapingu 24h, agregaty obliczane na żądanie     |
-| Vectorize         | 30M dimensions queried / mc        | Embedding tylko nowych recenzji per analiza            |
-| Workers Requests  | 100k / dzień                       | SSE polling co 500ms (zamiast WebSocket)               |
 
