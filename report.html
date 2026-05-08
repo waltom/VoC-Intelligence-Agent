@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>VoC Report — Pyszne.pl</title>
+<style>:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 0;
+  font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a; background: #fff; max-width: 880px; margin: 0 auto; padding: 32px;
+}
+h1 { font-size: 32px; margin: 8px 0; letter-spacing: -0.02em; }
+h2 { font-size: 18px; margin: 36px 0 12px; letter-spacing: -0.01em; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; }
+.kicker { text-transform: uppercase; letter-spacing: 0.12em; font-size: 11px; color: #64748b; margin: 0; }
+.meta { color: #64748b; margin: 4px 0; font-size: 13px; }
+.cover { padding: 32px 0 24px; border-bottom: 2px solid #0f172a; }
+.cover .logo { max-height: 36px; margin-bottom: 12px; }
+.lead { font-size: 17px; line-height: 1.6; }
+.chart { display: block; max-width: 100%; height: auto; }
+.axis-label, .cat-label, .cat-value { font: 11px ui-sans-serif, system-ui, sans-serif; fill: #475569; }
+.cat-label { font-weight: 500; }
+.empty { color: #94a3b8; font-style: italic; padding: 12px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.themes { list-style: none; padding: 0; }
+.themes li { padding: 8px 0; border-bottom: 1px dashed #e2e8f0; }
+.theme-head { display: flex; justify-content: space-between; align-items: baseline; }
+.themes .count { color: #64748b; font-size: 12px; }
+.themes.positive .theme-head strong { color: #15803d; }
+.themes.negative .theme-head strong { color: #b91c1c; }
+.quotes { color: #475569; margin: 6px 0 0 16px; padding: 0; font-size: 13px; }
+.quotes li, .evidence li { margin: 2px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+th { background: #f8fafc; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: #475569; }
+.num { text-align: center; font-variant-numeric: tabular-nums; }
+.desc { color: #475569; font-size: 13px; margin-top: 4px; }
+.evidence { margin: 0; padding: 0; list-style: none; color: #475569; font-size: 12px; }
+footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #e2e8f0; color: #94a3b8; font-size: 12px; }
+.methodology ul { color: #475569; }
+@media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } body { padding: 16px; } }
+@media print { body { padding: 0; max-width: none; } .cover { padding-top: 0; } h2 { break-after: avoid; } table, .themes li { break-inside: avoid; } }</style>
+</head>
+<body>
+<header class="cover">
+  
+  <p class="kicker">Voice of Customer Intelligence Report</p>
+  <h1>Pyszne.pl</h1>
+  <p class="meta">8 maja 2026 · 4 recenzji · czas analizy 30s</p>
+  <p class="meta">Konkurenci: Glovo, Uber Eats</p>
+</header>
+
+<section>
+  <h2>Executive summary</h2>
+  <p class="lead">Pyszne.pl ma mocny UX aplikacji, ale narastają sygnały o cenie i jakości dostawy. Inwestycja w kontrolę opłat dodatkowych zatrzyma odpływ klientów.</p>
+</section>
+
+<section>
+  <h2>Trend sentymentu</h2>
+  <svg viewBox="0 0 720 220" class="chart" role="img">
+    <line x1="40" x2="696" y1="102.0" y2="102.0" stroke="#cbd5e1" stroke-dasharray="4 4"/>
+    <path d="M 40.0 110.2 L 696.0 97.9" stroke="#2563eb" stroke-width="2.5" fill="none"/>
+    <circle cx="40.0" cy="110.2" r="3.5" fill="#2563eb"/><circle cx="696.0" cy="97.9" r="3.5" fill="#2563eb"/>
+    <text x="40.0" y="208" text-anchor="middle" class="axis-label">2025-03</text><text x="696.0" y="208" text-anchor="middle" class="axis-label">2025-04</text>
+  </svg>
+</section>
+
+<section>
+  <h2>Kategorie</h2>
+  <svg viewBox="0 0 720 128" class="chart" role="img">
+        <text x="122" y="32" text-anchor="end" class="cat-label">delivery</text>
+        <rect x="130" y="18" width="283.0" height="20" fill="#dc2626" rx="3"/>
+        <text x="419.0" y="32" class="cat-value">1 · sent -0.70</text>
+      
+        <text x="122" y="68" text-anchor="end" class="cat-label">ux</text>
+        <rect x="130" y="54" width="283.0" height="20" fill="#16a34a" rx="3"/>
+        <text x="419.0" y="68" class="cat-value">1 · sent 0.70</text>
+      
+        <text x="122" y="104" text-anchor="end" class="cat-label">price</text>
+        <rect x="130" y="90" width="566.0" height="20" fill="#64748b" rx="3"/>
+        <text x="702.0" y="104" class="cat-value">2 · sent 0.00</text>
+      </svg>
+</section>
+
+<section class="two-col">
+  <div>
+    <h2>Top reklamacje</h2>
+    <ul class="themes negative">
+    <li>
+      <div class="theme-head"><strong>Opłaty dodatkowe</strong> <span class="count">×1</span></div>
+      <ul class="quotes"><li>&ldquo;Drogo, opłata serwisowa to przesada.&rdquo;</li></ul>
+    </li></ul>
+  </div>
+  <div>
+    <h2>Top pochwały</h2>
+    <ul class="themes positive">
+    <li>
+      <div class="theme-head"><strong>UX aplikacji</strong> <span class="count">×1</span></div>
+      <ul class="quotes"><li>&ldquo;Łatwe zamawianie, przejrzysta apka.&rdquo;</li></ul>
+    </li></ul>
+  </div>
+</section>
+
+
+
+<section>
+  <h2>Action items</h2>
+  <table class="actions">
+    <thead><tr><th>Action item</th><th>Impact</th><th>Effort</th><th>Evidence</th></tr></thead>
+    <tbody>
+    <tr>
+      <td><strong>Transparentność opłaty serwisowej</strong><div class="desc">Pokaż rozbicie opłat przed potwierdzeniem.</div></td>
+      <td class="num">4</td>
+      <td class="num">2</td>
+      <td><ul class="evidence"><li>&ldquo;Drogo, opłata serwisowa to przesada.&rdquo;</li></ul></td>
+    </tr></tbody>
+  </table>
+</section>
+
+<section class="methodology">
+  <h2>Methodology</h2>
+  <ul>
+    <li>Źródła: Trustpilot, Opineo, App Store (iTunes RSS), import wklejonych recenzji</li>
+    <li>Klasyfikacja: Workers AI (llama-3.1-8b) + embeddingi bge-m3 (1024-dim)</li>
+    <li>Synteza i refleksja: Gemini 2.5 Flash Lite z walidacją evidence (cytaty muszą występować w bazie recenzji)</li>
+    <li>Tokens użyte (Gemini): 0 (0 in / 0 out)</li>
+    <li>Szacowany koszt: $0.0000</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Generated 2026-05-08T07:35:53.133Z · analysis 185de2d9-bcf0-4bc6-a9da-f060b48e46bf</p>
+</footer>
+
+<script type="application/json" id="report-data">{"analysisId":"185de2d9-bcf0-4bc6-a9da-f060b48e46bf","businessName":"Pyszne.pl","competitors":["Glovo","Uber Eats"],"createdAt":1778225638608,"completedAt":1778225668608,"summary":{"executiveSummary":"Pyszne.pl ma mocny UX aplikacji, ale narastają sygnały o cenie i jakości dostawy. Inwestycja w kontrolę opłat dodatkowych zatrzyma odpływ klientów.","sentimentTrend":[{"month":"2025-03","score":-0.1},{"month":"2025-04","score":0.05}],"categoryBreakdown":[{"category":"delivery","count":1,"avgSentiment":-0.7},{"category":"ux","count":1,"avgSentiment":0.7},{"category":"price","count":2,"avgSentiment":0}],"topComplaints":[{"theme":"Opłaty dodatkowe","count":1,"exampleQuotes":["Drogo, opłata serwisowa to przesada."]}],"topPraises":[{"theme":"UX aplikacji","count":1,"exampleQuotes":["Łatwe zamawianie, przejrzysta apka."]}],"actionItems":[{"title":"Transparentność opłaty serwisowej","description":"Pokaż rozbicie opłat przed potwierdzeniem.","impact":4,"effort":2,"evidence":["Drogo, opłata serwisowa to przesada."]}]},"usage":{"promptTokens":0,"outputTokens":0,"totalTokens":0,"costUsd":0},"reviewCount":4}</script>
+</body>
+</html>

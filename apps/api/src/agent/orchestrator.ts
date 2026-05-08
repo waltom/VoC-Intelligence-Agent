@@ -50,6 +50,11 @@ export class AnalysisOrchestrator extends DurableObject<Env> {
           const state = this.readState();
           return Response.json({ ok: true, state });
         }
+        case "/reset": {
+          this.ctx.storage.sql.exec("DELETE FROM state");
+          await this.ctx.storage.deleteAlarm();
+          return Response.json({ ok: true, reset: true });
+        }
         default:
           return Response.json({ ok: false, error: "unknown DO route" }, { status: 404 });
       }

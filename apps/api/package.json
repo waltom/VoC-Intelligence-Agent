@@ -11,6 +11,7 @@
     "deploy": "wrangler deploy",
     "test": "vitest run",
     "test:watch": "vitest",
+    "seed": "pnpm exec tsx scripts/seed.ts",
     "d1:migrate:local": "wrangler d1 migrations apply voc_db --local",
     "d1:migrate:remote": "wrangler d1 migrations apply voc_db --remote",
     "d1:create": "wrangler d1 create voc_db",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20251101.0",
     "@worker-tools/html-rewriter": "^0.1.0-pre.18",
+    "tsx": "^4.19.2",
     "typescript": "^5.6.3",
     "vitest": "2.1.4",
     "wrangler": "^4.88.0"

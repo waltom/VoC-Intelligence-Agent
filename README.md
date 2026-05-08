@@ -52,6 +52,31 @@ flowchart TD
 > co kończy się po kilku analizach. Domyślnie używamy `fetch` + `HTMLRewriter`; rendering
 > przeglądarki będzie opcjonalnym fallbackiem.
 
+## API endpoints
+
+Wszystkie poza `/health` i `/demo/*` wymagają nagłówka `x-api-key: $API_KEY`. Spójna struktura błędów: `{error, code, details?}`.
+
+| Method | Path                              | Opis                                                                       |
+| ------ | --------------------------------- | -------------------------------------------------------------------------- |
+| GET    | `/health`                         | Liveness probe — `{ok:true}`                                               |
+| GET    | `/demo/sample-analysis`           | Statyczna analiza InPost dla podglądu UI bez odpalania pipeline'u          |
+| POST   | `/analyses`                       | Start analizy (rate limit 5/h per IP, quota guard nad Workers AI 80%)      |
+| GET    | `/analyses?status=&limit=&offset=`| Lista analiz, paginacja                                                    |
+| GET    | `/analyses/:id`                   | Szczegóły + summary + `tokensUsed` + `costEstimateUsd`                     |
+| GET    | `/analyses/:id/events`            | SSE — live progress, polling D1.events co 500ms                            |
+| GET    | `/analyses/:id/reviews?...`       | Paginowane recenzje (filtry: `sentiment`, `category`, `q`)                 |
+| GET    | `/analyses/:id/report.html`       | Self-contained HTML z inline SVG, cache w R2                               |
+| GET    | `/analyses/:id/report.pdf`        | **501** — użyj `/report.html` + Print → Save as PDF                        |
+| DELETE | `/analyses/:id`                   | Kasuje D1 (cascade) + Vectorize batch delete + R2 cache + DO state         |
+
+### Observability
+
+Każdy `GET /analyses/:id` zwraca:
+- `tokensUsed` — suma `usage.promptTokens + usage.outputTokens` z eventów Gemini
+- `costEstimateUsd` — wycena per Gemini Flash Lite ($0.10/M in, $0.40/M out)
+
+Demo: typowa analiza `manual_paste` to ~3 wywołania Gemini (classify-fallback nie odpala się z manualem, więc tylko synteza), ~$0.001-0.003.
+
 ## Setup
 
 ### 1. Konta i klucze
@@ -91,7 +116,15 @@ pnpm --filter @voc/api d1:migrate:local    # lokalnie (.wrangler/state)
 pnpm --filter @voc/api d1:migrate:remote   # w produkcji
 ```
 
-### 5. Dev
+### 5. Seed danych demo (opcjonalnie)
+
+```bash
+pnpm --filter @voc/api seed
+# wstawia 2 zakończone analizy (InPost, Pyszne.pl) do lokalnej D1
+# żebyś miał co pokazać w UI bez odpalania pełnego pipeline'u
+```
+
+### 6. Dev
 
 ```bash
 pnpm dev

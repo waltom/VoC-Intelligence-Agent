@@ -1,0 +1,142 @@
+import { Hono } from "hono";
+import type { Env } from "../env.js";
+
+export const demoRoutes = new Hono<{ Bindings: Env }>();
+
+const SAMPLE = {
+  ok: true,
+  analysis: {
+    id: "demo-inpost",
+    businessName: "InPost",
+    businessUrl: "https://inpost.pl",
+    competitors: ["DPD", "DHL", "GLS"],
+    status: "completed",
+    sourceMode: "auto",
+    createdAt: 1714000000000,
+    completedAt: 1714000125000,
+    reviewCount: 87,
+    tokensUsed: 24310,
+    costEstimateUsd: 0.0072,
+    summary: {
+      executiveSummary:
+        "InPost utrzymuje silną pozycję dzięki sieci paczkomatów dostępnych 24/7, jednak narastają sygnały o jakości obsługi reklamacji i zawodności urządzeń w mniejszych miejscowościach. Obniżenie czasu reakcji supportu i transparentność procesu zwrotów to dwa najwyżej priorytetowe ruchy. Aplikacja mobilna wymaga stabilizacji — częste wylogowania pojawiają się jako spójny temat.",
+      sentimentTrend: [
+        { month: "2024-12", score: 0.42 },
+        { month: "2025-01", score: 0.31 },
+        { month: "2025-02", score: 0.18 },
+        { month: "2025-03", score: 0.05 },
+        { month: "2025-04", score: 0.22 },
+      ],
+      categoryBreakdown: [
+        { category: "delivery", count: 41, avgSentiment: 0.35 },
+        { category: "service", count: 22, avgSentiment: -0.42 },
+        { category: "ux", count: 12, avgSentiment: -0.18 },
+        { category: "price", count: 7, avgSentiment: 0.6 },
+        { category: "communication", count: 5, avgSentiment: -0.55 },
+      ],
+      topComplaints: [
+        {
+          theme: "Długi czas rozpatrywania reklamacji",
+          count: 14,
+          exampleQuotes: [
+            "Reklamacja idzie 3 tygodnie i nikt się nie odzywa.",
+            "Zaginęła paczka, zwrot kosztów dopiero po 6 tygodniach.",
+          ],
+        },
+        {
+          theme: "Niedziałające paczkomaty",
+          count: 9,
+          exampleQuotes: [
+            "Paczkomat zepsuty drugi raz w tym tygodniu.",
+            "Niestety sprzęt często nieczynny w mojej okolicy.",
+          ],
+        },
+        {
+          theme: "Aplikacja mobilna",
+          count: 6,
+          exampleQuotes: ["Aplikacja mobilna ciągle się wylogowuje, irytujące."],
+        },
+      ],
+      topPraises: [
+        {
+          theme: "Dostępność 24/7 i szybkość",
+          count: 18,
+          exampleQuotes: [
+            "Wygodne, że paczkomat 24/7. Świetne rozwiązanie.",
+            "Polecam — zawsze na czas, kurier miły.",
+          ],
+        },
+        {
+          theme: "Sprawne zwroty",
+          count: 11,
+          exampleQuotes: ["Bardzo szybki zwrot, sprawnie i bez zbędnej biurokracji."],
+        },
+      ],
+      competitorComparison: [
+        {
+          competitor: "DPD",
+          winRate: 0.62,
+          theirStrengths: ["doręczenia kurierskie", "śledzenie paczek"],
+          theirWeaknesses: ["godziny pracy", "okna czasowe"],
+        },
+        {
+          competitor: "DHL",
+          winRate: 0.55,
+          theirStrengths: ["międzynarodowe przesyłki"],
+          theirWeaknesses: ["cena", "dostępność punktów"],
+        },
+      ],
+      actionItems: [
+        {
+          title: "Skróć SLA reklamacji do 7 dni",
+          description:
+            "Najczęstszy temat reklamacji to wielotygodniowy proces. Wprowadzenie twardego SLA z eskalacją po 3 dniach od zgłoszenia rozwiąże znaczną część skarg.",
+          impact: 5,
+          effort: 3,
+          evidence: [
+            "Reklamacja idzie 3 tygodnie i nikt się nie odzywa.",
+            "Zaginęła paczka, zwrot kosztów dopiero po 6 tygodniach.",
+          ],
+        },
+        {
+          title: "Predykcyjny monitoring paczkomatów",
+          description:
+            "Awarie pojawiają się powtarzalnie w tych samych lokalizacjach. Monitoring telemetryczny + auto-zlecenia serwisowe zredukują skargi o ~40%.",
+          impact: 4,
+          effort: 4,
+          evidence: [
+            "Paczkomat zepsuty drugi raz w tym tygodniu.",
+            "Niestety sprzęt często nieczynny w mojej okolicy.",
+          ],
+        },
+        {
+          title: "Stabilizacja sesji w aplikacji mobilnej",
+          description:
+            "Wylogowywanie sesji występuje u >5% użytkowników. Audyt token refresh + test E2E sesji.",
+          impact: 3,
+          effort: 2,
+          evidence: ["Aplikacja mobilna ciągle się wylogowuje, irytujące."],
+        },
+        {
+          title: "Telefon zwrotny w kanale support",
+          description:
+            "Klienci nie odbierają samodzielnie kontaktu — proaktywny callback w ciągu 24h od zgłoszenia.",
+          impact: 4,
+          effort: 2,
+          evidence: ["Cena rozsądna, ale obsługa klienta nie odbiera telefonu."],
+        },
+        {
+          title: "Status paczki real-time po zaginięciu",
+          description:
+            "Brak komunikacji w trakcie zaginięcia jest opisywany jako gorszy niż samo zgubienie. Auto-aktualizacje SMS/push co 24h do zamknięcia sprawy.",
+          impact: 3,
+          effort: 3,
+          evidence: ["Zaginęła paczka, zwrot kosztów dopiero po 6 tygodniach."],
+        },
+      ],
+    },
+    error: null,
+  },
+};
+
+demoRoutes.get("/sample-analysis", (c) => c.json(SAMPLE));

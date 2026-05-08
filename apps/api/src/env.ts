@@ -2,7 +2,6 @@ import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 
 /**
  * Runtime bindings — keep names in sync with wrangler.toml.
- * Note: D1 / R2 binding names use snake_case to match the user's wrangler.toml.
  */
 export interface Env {
   voc_db: D1Database;
@@ -14,4 +13,9 @@ export interface Env {
   GEMINI_API_KEY: string;
   BRAVE_SEARCH_API_KEY: string;
   FRONTEND_ORIGIN: string;
+
+  /** Public-ish API key required for /analyses/* (set via .dev.vars or `wrangler secret`). */
+  API_KEY: string;
+  /** Optional logo as data URL embedded into report covers. */
+  LOGO_DATA_URL?: string;
 }
